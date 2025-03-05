@@ -1,0 +1,67 @@
+<div *ngIf="isLoading" class="loading">Loading jobs...</div>
+
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+<div *ngIf="!isLoading && !errorMessage">
+  <div class="sidebar">
+    <!-- Location Filters -->
+    <div class="location-filter">
+      <label for="location">Select District:</label>
+      <select id="location" [(ngModel)]="selectedLocation" (change)="filterJobs()">
+        <option value="">All Districts</option>
+        <option *ngFor="let district of tamilNaduDistricts" [value]="district">{{ district }}</option>
+      </select>
+    </div>
+
+    <!-- Salary Filters -->
+    <div class="salary-filter">
+      <label for="salary">Select Salary Range:</label>
+      <select id="salary" [(ngModel)]="selectedSalaryRange" (change)="filterJobs()">
+        <option value="">All Salaries</option>
+        <option value="20000-30000">20,000 to 30,000</option>
+        <option value="30000-50000">30,000 to 50,000</option>
+        <option value="50000">Above 50,000</option>
+      </select>
+    </div>
+
+    <!-- Experience Filters -->
+    <div class="experience-filter">
+      <label for="experience">Select Experience:</label>
+      <select id="experience" [(ngModel)]="selectedExperience" (change)="filterJobs()">
+        <option value="">All Experience Levels</option>
+        <option value="fresher">Fresher</option>
+        <option value="1">1 Year</option>
+        <option value="2">2 Years</option>
+        <option value="3">Above 3 Years</option>
+      </select>
+    </div>
+
+    <!-- Search Input -->
+    <div class="search-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="filterJobs()"
+        placeholder="Search for jobs..."
+        class="search-input"
+      />
+    </div>
+  </div>
+
+  <div class="job-list-container">
+    <h2>Available Jobs</h2>
+    <ul class="job-list">
+      <li *ngFor="let job of filteredJobs" class="job-card">
+        <h3>{{ job.data.jobRole }}</h3>
+        <p>{{ job.data.companyName }}</p>
+        <p>{{ job.data.location }}</p>
+        <p>{{ job.data.experience }} </p>
+        <p><strong>Job Description:</strong> {{ job.data.description }}</p>
+        <p><strong>Salary:</strong> {{ job.data.salary }}</p>
+        <p><strong>Email:</strong> <a href="mailto:{{ job.data.email }}">{{ job.data.email }}</a></p>
+
+        <button [routerLink]="['/form']" class="apply-link" (click)="apply()">Apply Here</button>
+      </li>
+    </ul>
+  </div>
+</div>

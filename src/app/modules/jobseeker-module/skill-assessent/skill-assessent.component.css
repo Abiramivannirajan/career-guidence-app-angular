@@ -1,0 +1,119 @@
+.assessment-container {
+  background: linear-gradient(to right, #e3f2fd, #bbdefb); /* Light blue gradient */
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: center;
+} 
+
+/* Heading style */
+.heading {
+  color: #1565c0; /* Deep blue */
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Styling the form */
+.assessment-form {
+  background-color: #aca6a6;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for each question */
+.question-container {
+  margin-bottom: 25px;
+}
+
+/* Styling the question text */
+.question-text {
+  font-size: 1.2rem;
+  color: #263238; /* Dark gray */
+  font-weight: 600;
+}
+
+.radio-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.radio-option p {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Radio button styling */
+.radio-label {
+  font-size: 16px;
+  color: #444;
+  cursor: pointer;
+  padding: 10px;
+  border: 2px solid #90caf9; /* Light blue */
+  border-radius: 8px;
+  background: #e3f2fd; /* Lightest blue */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin: 0 5px;
+}
+
+/* Hover and checked states */
+input[type="radio"]:hover + .radio-label {
+  background-color: #64b5f6; /* Medium blue */
+  color: white;
+  transform: scale(1.05);
+}
+
+input[type="radio"]:checked + .radio-label {
+  background-color: #1e88e5; /* Strong blue */
+  color: white;
+  box-shadow: 0 0 8px rgba(30, 136, 229, 0.6);
+}
+
+/* Submit button */
+.submit-btn {
+  background: linear-gradient(45deg, #42a5f5, #1e88e5); /* Gradient blue */
+  color: white;
+  padding: 12px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(45deg, #1e88e5, #1565c0); /* Darker gradient */
+  transform: scale(1.05);
+}
+
+/* Smooth transition effects */
+button, .radio-label {
+  transition: all 0.1s ease-in-out;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .assessment-container {
+      padding: 20px;
+      margin: 10px;
+  }
+
+  .submit-btn {
+      width: 100%;
+      padding: 15px;
+  }
+}

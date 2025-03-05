@@ -1,0 +1,33 @@
+<div class="assessment-container">
+  <h2 class="heading">Skill Assessment</h2>
+
+  <form class="assessment-form">
+    <div *ngFor="let question of questions" class="question-container">
+      <h3 class="question-category">{{ question.category }}</h3>
+      <p class="question-text">{{ question.question }}</p>
+
+      <!-- Display radio buttons for each level -->
+      <div class="radio-buttons">
+        <div *ngFor="let level of [1, 2, 3, 4, 5]" class="radio-option">
+          <input 
+            type="radio" 
+            name="question{{ question.id }}" 
+            [value]="level" 
+            (change)="answers[question.id] = getAnswer(level)" 
+            id="level{{ question.id }}_{{ level }}">
+          <label for="level{{ question.id }}_{{ level }}" class="radio-label">{{ level }}</label>
+          <p class="knowledge-level">Knowledge Level {{ level }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="button" class="submit-btn" (click)="submitAnswers()">Submit</button>
+  </form>
+
+  <!-- Display Predicted Score -->
+  <div *ngIf="predictedScore" class="result-container">
+    <h3>Predicted Score: {{ predictedScore }}</h3>
+    <p>Confidence: {{ confidence }}</p>
+  </div>
+</div>

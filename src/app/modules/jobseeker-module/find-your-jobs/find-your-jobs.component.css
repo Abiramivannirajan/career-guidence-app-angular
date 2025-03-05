@@ -1,0 +1,219 @@
+/* General styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f7fc;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: row;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #343a40; /* Dark gray for the title */
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Sidebar (fixed on the left side) */
+.sidebar {
+  width: 250px;
+  background-color: hwb(211 56% 4%);
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  color: #fff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.sidebar select,
+.sidebar input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.sidebar select:focus,
+.sidebar input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Search container */
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-input {
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Main content container (job list) */
+.job-list-container {
+  margin-left: 270px; /* Offset to the right of the sidebar */
+  padding: 20px;
+  width: calc(100% - 270px); /* Adjust width for the sidebar */
+}
+
+.job-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Added gap between job cards */
+}
+
+li.job-card {
+  background: #ffffff; /* White background for card */
+  padding: 20px;
+  margin: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  width: 280px;
+  height: auto;
+  text-align: left; /* Align text to the left */
+  position: relative;
+  border: 1px solid #e0e0e0; /* Light border for better definition */
+}
+
+li.job-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Job role heading */
+.job-card h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #007bff; /* Blue color for job role */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Job details paragraphs */
+.job-card p {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: #555; /* Soft dark gray for text */
+}
+
+/* Style for the apply button */
+.apply-link {
+  display: inline-block;
+  text-decoration: none;
+  background: #007bff; /* Blue background */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px; /* Rounded corners for the button */
+  margin-top: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.apply-link:hover {
+  background: #0056b3; /* Darker blue on hover */
+  transform: translateY(-2px); /* Button lift on hover */
+}
+
+/* Style for the loading text */
+.loading {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #28a745; /* Green color for loading */
+  text-align: center;
+  margin: 20px 0;
+  animation: pulse 1.5s infinite; /* Add a pulsing effect */
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Style for the error message */
+.error {
+  color: #dc3545; /* Red for error */
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+  background-color: #f8d7da; /* Light red background */
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 10px;
+  }
+
+  .job-list-container {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .job-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  li.job-card {
+    width: 90%; /* Take up most of the width on small screens */
+  }
+}
+
+/* Additional filter styling */
+.location-filter,
+.salary-filter,
+.experience-filter {
+  margin-bottom: 20px;
+}

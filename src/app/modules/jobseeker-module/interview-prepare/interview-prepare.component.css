@@ -1,0 +1,101 @@
+mat-tab-group {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  mat-card {
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+  
+  mat-card h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  mat-card h4 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0073e6;
+    margin-top: 15px;
+  }
+  
+  mat-card h5 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+    margin-top: 12px;
+  }
+  
+  mat-card h6 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    margin-top: 10px;
+  }
+  
+  mat-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  
+  mat-card ul {
+    padding-left: 20px;
+    margin: 10px 0;
+  }
+  
+  mat-card ul li {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  button[mat-button] {
+    display: block;
+    margin: 20px auto;
+    background-color: #0073e6;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  button[mat-button]:hover {
+    background-color: #005bb5;
+  }
+  
+  @media screen and (max-width: 768px) {
+    mat-card {
+      padding: 15px;
+    }
+    
+    mat-card h3 {
+      font-size: 20px;
+    }
+  
+    mat-card h4 {
+      font-size: 16px;
+    }
+  
+    mat-card h5 {
+      font-size: 14px;
+    }
+  
+    mat-card p,
+    mat-card ul li {
+      font-size: 13px;
+    }
+    
+  }
+  
