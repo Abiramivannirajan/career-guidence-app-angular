@@ -8,18 +8,33 @@
         <li><a routerLink="/interview-prepare">Interview Preparation</a></li>
         <li><a routerLink="/skill-assessent">Skill Assessment</a></li>
         <li><a routerLink="/find">Find Your Jobs</a></li>
-        <li><a routerLink="/login">Login</a></li>
+        <span class="profile-name" *ngIf="currentUser">{{ currentUser }}</span>
+        <li>
+          <a routerLink="/common-login" *ngIf="currentUser.length == 0; else logoutbutton">Login</a>
+          <ng-template #logoutbutton>
+            <a (click)="logOut()">Logout</a>
+          </ng-template>
+        </li>
       </ul>
     </div>
   </nav>
   
   <div class="job-seeker-home">
+
+    <h1><marquee class="marquee-text">Welcome to DreamPath Guidance</marquee></h1>
+
+
     <img src="assets/job.jpg" width="1150" height="500">
+
+
     <!-- Dream Path Guidance Section -->
     <section class="dream-path">
 
       <h2>{{ dreamPathText }}</h2>
+  
       <p>{{ dreamPathDescription }}</p>
+
+        <button [routerLink]="['/discover-free-courses']" class="get-started-btn">Get Started Our Free Courses</button>
 
     </section>
  

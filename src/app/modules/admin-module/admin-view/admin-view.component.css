@@ -127,12 +127,12 @@ table tr:hover {
 }
 
 .form-container button:last-child {
-  background-color: #e74c3c;
+  background-color: #1ad8e6;
   margin-left: 15px;
 }
 
 .form-container button:last-child:hover {
-  background-color: #c0392b;
+  background-color: #32b8ac;
 }
 
 /* FAQ Section */

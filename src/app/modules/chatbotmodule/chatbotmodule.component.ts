@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { couchchatbotService } from '../../services/couchchatbot.service';
 
-
-
 @Component({
   selector: 'app-chatbotmodule',
   standalone: true,
@@ -16,9 +14,17 @@ import { couchchatbotService } from '../../services/couchchatbot.service';
   providers:[couchchatbotService]// Fixed typo (should be styleUrls)
 })
 export class ChatbotmoduleComponent {
+  logout() {
+    throw new Error('Method not implemented.');
+  }
+  getLoggedInUser(): string {
+    throw new Error('Method not implemented.');
+  }
+  isDarkTheme: boolean = false;
   isListening: boolean = false;
   userMessage: string = '';
   messages: { sender: string, text: string }[] = []; // Stores chat history
+
 
   constructor(private chatbotService: couchchatbotService) {}
 
@@ -29,9 +35,9 @@ export class ChatbotmoduleComponent {
     this.messages.push({ sender: 'user', text: userInput });
 
     this.chatbotService.sendMessage(userInput).subscribe({
-      next: (response: string) => {
+      next: (response: any) => {
         console.log("Bot Response:", response);
-        this.messages.push({ sender: 'bot', text: response });
+        this.messages.push({ sender: 'bot', text: response.response });
       },
       error: (error: any) => {
         console.error('Error:', error);
@@ -45,5 +51,9 @@ export class ChatbotmoduleComponent {
   startListening(): void {
     this.isListening = true;
     console.log("Listening started...");
+  }
+
+  toggleTheme() {
+    this.isDarkTheme = !this.isDarkTheme;
   }
 }

@@ -1,3 +1,4 @@
+import { Routes } from '@angular/router';
 import { HomeComponent } from './modules/student-module/home/home.component';
 import { PersonalAssessentComponent } from './modules/student-module/personal-assessent/personal-assessent.component';
 import { AdminViewComponent } from './modules/admin-module/admin-view/admin-view.component';
@@ -9,15 +10,18 @@ import { SkillAssessentComponent } from './modules/jobseeker-module/skill-assess
 import { PredictedStreamComponent } from './modules/student-module/predicted-stream/predicted-stream.component';
 import { StreamComponent } from './modules/student-module/stream/stream.component';
 import { SubstreamsComponent } from './modules/student-module/substream/substream.component';
-import { Routes } from '@angular/router';
 import { TrendingCoursesComponent } from './modules/student-module/trending-courses/trending-courses.component';
-import { MoreInfoComponent } from './modules/student-module/more-info/more-info.component';
 import { JobSeekerHomePageComponent } from './modules/jobseeker-module/jobseeker-home-page/jobseeker-home-page.component';
 import { FindYourJobsComponent } from './modules/jobseeker-module/find-your-jobs/find-your-jobs.component';
 import { InterviewPrepareComponent } from './modules/jobseeker-module/interview-prepare/interview-prepare.component';
 import { ChatbotmoduleComponent } from './modules/chatbotmodule/chatbotmodule.component';
 import { ApplicationFormComponent } from './modules/jobseeker-module/application-form/application-form.component';
 import { MockInterviewComponent } from './modules/jobseeker-module/mock-interview/mock-interview.component';
+import { ApplicationViewComponent } from './modules/jobseeker-module/application-view/application-view.component';
+import { DiscoverFreeCoursesComponent } from './modules/jobseeker-module/discover-free-courses/discover-free-courses.component';
+import { FreeCoursesComponent } from './modules/jobseeker-module/free-courses/free-courses.component';
+
+
 
 
 export const routes: Routes = [
@@ -28,7 +32,6 @@ export const routes: Routes = [
   { path: 'common-login', component: CommonloginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'personal-assessment', component: PersonalAssessentComponent },
-  { path: 'more-info', component: MoreInfoComponent },
   { path: "trending-courses", component: TrendingCoursesComponent },
   { path: 'predicted-stream', component: PredictedStreamComponent },
   { path: 'job-details-view', component: JobDetails },
@@ -43,8 +46,12 @@ export const routes: Routes = [
   { path: 'trending-courses', component: TrendingCoursesComponent },
   { path: 'form', component: ApplicationFormComponent },
   {path: 'mock-interviews',component: MockInterviewComponent},
+  {path: 'application-view',component:ApplicationViewComponent},
+  {path:'discover-free-courses',component:DiscoverFreeCoursesComponent},
+  {path:'free-courses',component:FreeCoursesComponent},
+  {path:'job/:id',component:ApplicationViewComponent},
   
-  { path: '**', redirectTo: '' }, // Wildcard route for invalid URLs
+  { path: '**', redirectTo: '' }, 
 ];
 
 

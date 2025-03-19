@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RegisterService } from '../../services/register.service.service'; 
+
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import{v4 as uuidv4} from 'uuid';
+import { couchchatbotService } from '../../services/couchchatbot.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import{v4 as uuidv4} from 'uuid';
   imports: [CommonModule, HttpClientModule, RouterModule, FormsModule], 
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [RegisterService, HttpClient], 
+  providers: [couchchatbotService, HttpClient], 
 })
 export class RegisterComponent {
   userName: string = '';
@@ -27,7 +28,7 @@ export class RegisterComponent {
   user: any[] = [];
   isUsernameInvalid: boolean = false;
 
-  constructor(private registerService: RegisterService, private router: Router) { }
+  constructor(private couchchatbot: couchchatbotService, private router: Router) { }
   validateUsername(): void {
     const uppercaseRegex = /[A-Z]/;
     this.isUsernameInvalid = !uppercaseRegex.test(this.userName);
@@ -53,7 +54,7 @@ export class RegisterComponent {
   }
 
   emailExistsornot(): boolean {
-    this.registerService.checkUser(this.email).subscribe({
+    this.couchchatbot.checkUser(this.email).subscribe({
       next: (response: any) => {
         console.log("response",response);
         this.emailExists=response.rows.length>0;
@@ -87,7 +88,7 @@ export class RegisterComponent {
       };
 
       // Call the register service
-      this.registerService.registerUser(formData).subscribe({
+      this.couchchatbot.registerUser(formData).subscribe({
         next: (response: any) => {
           console.log(response); 
           alert('Registration successful!');

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { couchchatbotService } from '../../../services/couchchatbot.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { RegisterService } from '../../../services/register.service.service';
+
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
 
 @Component({
@@ -12,13 +12,13 @@ import { NavBarComponent } from "../nav-bar/nav-bar.component";
   imports: [CommonModule, HttpClientModule, NavBarComponent],
   templateUrl: './stream.component.html',
   styleUrl: './stream.component.css',
-  providers: [RegisterService, HttpClient]
+  providers: [couchchatbotService, HttpClient]
 })
 export class StreamComponent implements OnInit {
 
   courses: any[] = [];
 
-  constructor(private chatbot: RegisterService, private router: Router) {}
+  constructor(private chatbot: couchchatbotService, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchCourses();

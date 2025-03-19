@@ -3,9 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RegisterService } from '../../services/register.service.service'; 
+
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { couchchatbotService } from '../../services/couchchatbot.service';
 
 
 @Component({
@@ -30,7 +31,7 @@ export class CommonloginComponent {
   
   private router = inject(Router);
 
-  constructor(private registerService: RegisterService) {}
+  constructor(private couchchatbot: couchchatbotService) {}
   // Handle form submission
   onLogin(form: NgForm) {
     this.isFormSubmitted = true;
@@ -41,7 +42,7 @@ export class CommonloginComponent {
     }
 
     // Call getUser to check if the user exists
-    this.registerService.checkUser(this.email).subscribe({
+    this.couchchatbot.checkUser(this.email).subscribe({
       next: (response: any) => {
         if(response.rows.length===0){
           this.emailError='email not found'
@@ -57,11 +58,11 @@ export class CommonloginComponent {
         
         let userType : string = userdata.userType;
         console.log('Response from DB:',userType);
-        
-        this.registerService.currentuser = userdata.name;
+        console.log(userdata)
+        this.couchchatbot.currentuser = userdata.name;
         this.loginStatus=true;
 
-        this.registerService.setLoggedUser(userdata.name);
+        this.couchchatbot.setLoggedUser(userdata.name);
         if(this.loginStatus === true){
           if(userType === 'student')
             this.router.navigate(['/home']);

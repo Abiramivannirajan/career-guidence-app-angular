@@ -1,4 +1,12 @@
 /* Global Styles */
+
+.marquee-text {
+    color: #136a85; /* Green text color */
+    font-size: 2.5rem; /* Larger font size */
+    font-weight: bold; /* Make text bold */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  }
+  
 body {
     margin: 0;
     padding: 0;
@@ -124,7 +132,43 @@ body {
     margin: 0 auto;
     font-weight: 300;
 }
-
+/* Button Styling */
+.get-started-btn {
+    background-color: #c54141;  /* Green background */
+    color: white;               /* White text */
+    font-size: 16px;            /* Text size */
+    font-weight: bold;          /* Bold text */
+    padding: 15px 32px;         /* Padding inside the button */
+    text-align: center;         /* Text alignment */
+    text-decoration: none;      /* Remove underline */
+    display: inline-block;      /* Ensure it behaves like an inline element */
+    border: none;               /* Remove default border */
+    border-radius: 5px;         /* Rounded corners */
+    cursor: pointer;           /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.3s ease;  /* Smooth transition for background color and scaling */
+  }
+  
+  /* Hover effect */
+  .get-started-btn:hover {
+    background-color: #060c07; /* Darker green on hover */
+    transform: scale(1.05);     /* Slightly enlarge on hover */
+  }
+  
+  /* Focus effect */
+  .get-started-btn:focus {
+    outline: none;              /* Remove default focus outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.6); /* Blue glow on focus */
+  }
+  
+  /* Responsive Design for smaller screens */
+  @media (max-width: 600px) {
+    .get-started-btn {
+      width: 100%;              /* Make the button full-width on smaller screens */
+      padding: 12px 24px;       /* Adjust padding for mobile */
+      font-size: 14px;          /* Reduce font size for small screens */
+    }
+  }
+  
 /* Features Section */
 .features {
     display: grid;

@@ -4,7 +4,6 @@
 
 <div *ngIf="!isLoading && !errorMessage">
   <div class="sidebar">
-    <!-- Location Filters -->
     <div class="location-filter">
       <label for="location">Select District:</label>
       <select id="location" [(ngModel)]="selectedLocation" (change)="filterJobs()">
@@ -13,7 +12,6 @@
       </select>
     </div>
 
-    <!-- Salary Filters -->
     <div class="salary-filter">
       <label for="salary">Select Salary Range:</label>
       <select id="salary" [(ngModel)]="selectedSalaryRange" (change)="filterJobs()">
@@ -24,7 +22,6 @@
       </select>
     </div>
 
-    <!-- Experience Filters -->
     <div class="experience-filter">
       <label for="experience">Select Experience:</label>
       <select id="experience" [(ngModel)]="selectedExperience" (change)="filterJobs()">
@@ -36,7 +33,6 @@
       </select>
     </div>
 
-    <!-- Search Input -->
     <div class="search-container">
       <input
         type="text"
@@ -46,22 +42,35 @@
         class="search-input"
       />
     </div>
+    <div class="application-view" [routerLink]="'/application-view'">
+       <p> Application view</p>
+    </div>
   </div>
 
   <div class="job-list-container">
-    <h2>Available Jobs</h2>
+    <div class="job-list-container">
+      <h2>Available Jobs</h2>
+      <input type="text" name="searchbar" placeholder="Search for job" (input)="searchForJob()" [(ngModel)]="searchbarValue">
+    </div>
     <ul class="job-list">
-      <li *ngFor="let job of filteredJobs" class="job-card">
-        <h3>{{ job.data.jobRole }}</h3>
-        <p>{{ job.data.companyName }}</p>
-        <p>{{ job.data.location }}</p>
-        <p>{{ job.data.experience }} </p>
-        <p><strong>Job Description:</strong> {{ job.data.description }}</p>
-        <p><strong>Salary:</strong> {{ job.data.salary }}</p>
-        <p><strong>Email:</strong> <a href="mailto:{{ job.data.email }}">{{ job.data.email }}</a></p>
-
-        <button [routerLink]="['/form']" class="apply-link" (click)="apply()">Apply Here</button>
-      </li>
+        <li *ngFor="let job of filteredJobs" class="job-card">
+            <h3>{{ job.data.jobRole }}</h3>
+            <p>{{ job.data.companyName }}</p>
+            <p>{{ job.data.location }}</p>
+            <p>{{ job.data.experience }} Years</p>
+            <p><strong>Job Description:</strong> {{ job.data.description }}</p>
+            <p><strong>Salary:</strong> {{ job.data.salary }}</p>
+            <p><strong>Email:</strong> <a href="mailto:{{ job.data.email }}">{{ job.data.email }}</a></p>
+          
+            <button [routerLink]="['/form']" class="apply-link" (click)="apply()">Apply Here</button>
+          
+            <button *ngIf="!isFavorite(job._id)" (click)="markFavorite(job._id)" class="favorite-btn">
+              Add to Favorites
+            </button>
+          
+            <span *ngIf="isFavorite(job._id)" class="favorited-label"> ★ Favorited</span>
+          </li>
+          
     </ul>
   </div>
 </div>

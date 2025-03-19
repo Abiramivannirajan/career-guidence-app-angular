@@ -1,3 +1,24 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <a routerLink="/">DreamPath Guidance</a>
+    </div>
+    <ul class="navbar-links">
+      <li><a routerLink="/job-seeker-home-page">Home</a></li>
+      <li><a routerLink="/interview-prepare">Interview Preparation</a></li>
+      <li><a routerLink="/skill-assessent">Skill Assessment</a></li>
+      <li><a routerLink="/find">Find Your Jobs</a></li>
+      <span class="profile-name" *ngIf="currentUser">{{ currentUser }}</span>
+      <li>
+        <a routerLink="/common-login" *ngIf="currentUser.length == 0; else logoutbutton">Login</a>
+        <ng-template #logoutbutton>
+          <a (click)="logOut()">Logout</a>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 <mat-tab-group>
     <!-- Aptitude Section -->
     <mat-tab label="Aptitude">
@@ -115,24 +136,24 @@
           <p>Develop professional communication, teamwork, and leadership abilities to excel in your career. Soft skills are just as important as technical knowledge, as they help you work effectively with teams, handle challenges, and make a lasting impression during interviews.</p>
       
           <!-- Image for Soft Skills -->
-          <img src="assets/images/soft-skills.jpg" alt="Soft Skills" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+         
       
           <h4>Key Topics:</h4>
           <ul>
             <li>
-              <img src="assets/icons/emotional-intelligence.png" alt="Emotional Intelligence" width="25"> 
+              
               <strong> Emotional Intelligence:</strong> Recognizing, understanding, and managing emotions effectively.
             </li>
             <li>
-              <img src="assets/icons/conflict-resolution.png" alt="Conflict Resolution" width="25"> 
+            
               <strong> Conflict Resolution:</strong> Handling disagreements professionally and constructively.
             </li>
             <li>
-              <img src="assets/icons/time-management.png" alt="Time Management" width="25"> 
+             
               <strong> Time Management:</strong> Organizing and prioritizing tasks efficiently.
             </li>
             <li>
-              <img src="assets/icons/decision-making.png" alt="Decision Making" width="25"> 
+               
               <strong> Decision Making:</strong> Evaluating options and making well-informed choices.
             </li>
           </ul>
@@ -223,24 +244,24 @@
           <p>Crack coding rounds and system design interviews with structured learning. Enhance problem-solving skills and master the key concepts to stand out in technical interviews.</p>
       
           <!-- Image for Programming Interview -->
-          <img src="assets/images/programming-interview.jpg" alt="Programming Interview" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+  
       
           <h4>Key Topics:</h4>
           <ul>
             <li>
-              <img src="assets/icons/data-structures.png" alt="Data Structures" width="25"> 
+             
               <strong> Data Structures:</strong> Arrays, Linked Lists, Stacks, Queues, Trees, Graphs.
             </li>
             <li>
-              <img src="assets/icons/algorithms.png" alt="Algorithms" width="25"> 
+           
               <strong> Algorithms:</strong> Sorting, Searching, Dynamic Programming, Recursion.
             </li>
             <li>
-              <img src="assets/icons/system-design.png" alt="System Design" width="25"> 
+              
               <strong> System Design:</strong> Scalable architecture, Microservices, API Design.
             </li>
             <li>
-              <img src="assets/icons/best-practices.png" alt="Best Practices" width="25"> 
+              
               <strong> Best Practices:</strong> Code optimization, clean coding principles.
             </li>
           </ul>
@@ -314,7 +335,7 @@
           </ul>
       
           <!-- Programming Interview Tips Image -->
-          <img src="assets/images/programming-interview-tips.jpg" alt="Interview Tips" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+          
       
           <button mat-button color="primary">Start Practicing</button>
         </mat-card>
@@ -327,24 +348,24 @@
           <p>Master verbal and non-verbal communication to leave a lasting impression. Strong communication skills help you express ideas clearly, build rapport, and succeed in interviews.</p>
       
           <!-- Image for Communication Skills -->
-          <img src="assets/images/communication-skills.jpg" alt="Effective Communication" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+          
       
           <h4>Key Topics:</h4>
           <ul>
             <li>
-              <img src="assets/icons/public-speaking.png" alt="Public Speaking" width="25"> 
+             
               <strong> Public Speaking:</strong> Speak with clarity and confidence.
             </li>
             <li>
-              <img src="assets/icons/body-language.png" alt="Body Language" width="25"> 
+              
               <strong> Body Language:</strong> Posture, eye contact, and gestures to convey confidence.
             </li>
             <li>
-              <img src="assets/icons/persuasion.png" alt="Persuasion" width="25"> 
+             
               <strong> Persuasion & Influence:</strong> Techniques to convince interviewers effectively.
             </li>
             <li>
-              <img src="assets/icons/active-listening.png" alt="Active Listening" width="25"> 
+              
               <strong> Active Listening:</strong> Understanding and responding thoughtfully in discussions.
             </li>
           </ul>
@@ -414,7 +435,7 @@
           </ul>
       
           <!-- Interview Communication Tips Image -->
-          <img src="assets/images/interview-communication-tips.jpg" alt="Communication Tips" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+        
       
           <button mat-button color="primary">Improve Your Communication</button>
         </mat-card>
@@ -427,24 +448,24 @@
           <p>Prepare for behavioral questions, salary negotiations, and present yourself confidently in HR interviews.</p>
       
           <!-- Image for HR Interview -->
-          <img src="assets/images/hr-interview.jpg" alt="HR Interview" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+         
       
           <h4>Key Topics:</h4>
           <ul>
             <li>
-              <img src="assets/icons/self-introduction.png" alt="Self Introduction" width="25"> 
+               
               <strong> Self-Introduction:</strong> How to structure a compelling "Tell me about yourself" answer.
             </li>
             <li>
-              <img src="assets/icons/strengths-weaknesses.png" alt="Strengths and Weaknesses" width="25"> 
+              
               <strong> Strengths & Weaknesses:</strong> Presenting your skills strategically.
             </li>
             <li>
-              <img src="assets/icons/behavioral-questions.png" alt="Behavioral Questions" width="25"> 
+              
               <strong> Behavioral Questions:</strong> Using the STAR method to answer effectively.
             </li>
             <li>
-              <img src="assets/icons/salary-negotiation.png" alt="Salary Negotiation" width="25"> 
+              
               <strong> Salary Negotiation:</strong> Techniques to get the best offer without hesitation.
             </li>
           </ul>
@@ -518,7 +539,7 @@
           </ul>
       
           <!-- HR Interview Tips Image -->
-          <img src="assets/images/hr-interview-tips.jpg" alt="HR Interview Tips" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+          
       
           <button mat-button color="primary">Practice HR Questions</button>
         </mat-card>

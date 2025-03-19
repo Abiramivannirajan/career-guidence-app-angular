@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { couchchatbotService } from '../../../services/couchchatbot.service';
 
 @Component({
   selector: 'app-jobseeker-home-page',
@@ -20,6 +21,14 @@ export class JobSeekerHomePageComponent {
     { title: "Job Alerts", description: "Stay up-to-date with the latest job openings through personalized email notifications based on your preferences.", button: "More-info", route: "/find" },
     { title: "Career Development", description: "Access resources and courses to enhance your skills and advance your career.", button: "More-info", route: "/career-development" }
   ];
+
+  currentUser : string = "";
+
+  constructor(readonly couchchatbot: couchchatbotService){}
+
+  ngOnInit(){
+    this.currentUser = this.couchchatbot.getLoggedInUser() ?? "";
+  }
 
   getRouteForFeature(feature: any) {
     return feature.route;
@@ -45,4 +54,8 @@ export class JobSeekerHomePageComponent {
     { name: 'Terms & Conditions', link: '/terms-and-conditions' }
   ];
 
+  logOut(){
+    this.couchchatbot.logout();
+    this.currentUser = "";
+  }
 }

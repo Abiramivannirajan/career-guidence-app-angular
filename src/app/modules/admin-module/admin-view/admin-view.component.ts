@@ -3,11 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
-import { RegisterService } from '../../../services/register.service.service';
-
-import { FAQService } from '../../../services/faq.service';
 import { v4 as uuidv4 } from 'uuid';
-import { log } from 'console';
+import { couchchatbotService } from '../../../services/couchchatbot.service';
 
 @Component({
   selector: 'app-admin-view',
@@ -81,21 +78,20 @@ export class AdminViewComponent implements OnInit {
   };
   faqService: any;
   
-  constructor(private registerService: RegisterService, private http: HttpClient,
+  constructor(private couch:couchchatbotService, private http: HttpClient,
     
-private router: Router ,faqService: FAQService) {}
+private router: Router ) {}
 
   ngOnInit(): void {
     this.fetchUserList();
     this.fetchsubstreams();
     this.fetchcourses();
-    this.getFaq();
     this.fetchMockInterviewQuestions(); 
    
   }
 
   fetchUserList() {
-    this.registerService.getAllUser().subscribe({
+    this.couch.getAllUser().subscribe({
       next: (response: any) => {
         this.User = response.rows.map((row: any) => row.doc.data);
       },
@@ -104,7 +100,7 @@ private router: Router ,faqService: FAQService) {}
   }
 
   fetchsubstreams(): void {
-    this.registerService.getCourses().subscribe({
+    this.couch.getCourses().subscribe({
       next: (response: any) => {
         this.streamNameIdMap.clear();
         response.rows.forEach((user: any) => {
@@ -116,7 +112,7 @@ private router: Router ,faqService: FAQService) {}
   }
 
   fetchcourses() {
-    this.registerService.getCourses().subscribe({
+    this.couch.getCourses().subscribe({
       next: (response: any) => {
         this.substream = response.rows.map((row: any) => row);
       },
@@ -136,22 +132,6 @@ private router: Router ,faqService: FAQService) {}
     this.formVisible = this.jobform = this.coursesform = this.substreamform = false;
   }
 
-  addPlan() {
-    const planData = {
-      ...this.newPlan,
-      createdAt: new Date().toISOString(),
-    };
-
-    this.registerService.addPlan(planData).subscribe({
-      next: () => {
-        alert('Plan added successfully.');
-        this.newPlan = { _id: `pricing_2_${uuidv4()}`, data: { planName: '', description: '', price: null, duration: '', type: 'pricing' } };
-        this.formVisible = false;
-      },
-      error: () => alert('Failed to add plan. Please try again.'),
-    });
-  }
-
   addCoursesAndColleges() {
     if (!this.newcourses.data.stream_Name || !this.newcourses.data.description || !this.newcourses.data.imageUrl || !this.newcourses.data.colleges) {
       alert("Please fill all fields.");
@@ -163,7 +143,7 @@ private router: Router ,faqService: FAQService) {}
       data: { ...this.newcourses.data, createdAt: new Date().toISOString() }
     };
 
-    this.registerService.addCourses(streamData).subscribe({
+    this.couch.addCourses(streamData).subscribe({
       next: () => {
         alert('Course added successfully.');
         this.coursesform = false;
@@ -178,11 +158,6 @@ private router: Router ,faqService: FAQService) {}
       alert("Please fill all fields.");
       return;
     }
-
-    this.registerService.addPlan(this.newstream).subscribe({
-      next: () => alert('Substream added successfully.'),
-      error: () => alert('Failed to add substream.'),
-    });
   }
 
   addJobdetails() {
@@ -193,62 +168,12 @@ private router: Router ,faqService: FAQService) {}
       return;
     }
 
-    this.registerService.addJob(this.newJob).subscribe({
+    this.couch.addJob(this.newJob).subscribe({
       next: () => {
         alert('Job added successfully!');
         this.jobform = false;
       },
       error: () => alert('Failed to add job.'),
-    });
-  }
-
-  // FAQ Section
-  faqs: any[] = [];
-  filteredFaqs: any[] = [];
-  searchTerm: string = '';
-  selectedCategory: string = '';
-  newFaq: boolean = false;
-
-  newFaqQuestion: string = '';
-  newFaqAnswer: string = '';
-  categoryFaq: string = '';
-
-  faqCategories = [
-    { category: 'Student Search Tips' },
-    { category: 'Job Search Tips' }
-  ];
-
-  getFaq(): void {
-    this.faqService.get_faqs().subscribe({
-      next: (response: { rows: any[] }) => {
-        this.faqs = response.rows.map((row: any) => row.value);
-        this.filteredFaqs = [...this.faqs];
-      },
-      error: (error: any) => console.error('Error fetching FAQs:', error),
-    });
-  }
-
-  addFaq(): void {
-    if (!this.newFaqQuestion.trim() || !this.newFaqAnswer.trim() || !this.categoryFaq.trim()) {
-      alert('All fields are required.');
-      return;
-    }
-
-    const newFAQ = {
-      _id: this.newFaqQuestion.replace(/\s+/g, '_').toLowerCase(),
-      data: {
-         question: this.newFaqQuestion, 
-         answer: this.newFaqAnswer, 
-         faqCategory: this.categoryFaq,
-          type: 'faq' },
-    };
-
-    this.faqService.add_faq(newFAQ).subscribe({
-      next: () => {
-        alert('FAQ added successfully.');
-        this.getFaq();
-      },
-      error: () => console.error('Error adding FAQ'),
     });
   }
   question: string = '';
@@ -263,7 +188,7 @@ private router: Router ,faqService: FAQService) {}
 
   // Fetch the questions from CouchDB
   fetchMockInterviewQuestions(): void {
-    this.registerService.getMockInterviewQuestions().subscribe({
+    this.couch.getMockInterviewQuestions().subscribe({
       next: (data: any) => {
         console.log('Mock interview questions:', data);
         this.mockInterviewQuestions = data.rows?.map((row: any) => row.doc.data) || [];
@@ -274,26 +199,30 @@ private router: Router ,faqService: FAQService) {}
     });
   }
   
-
   // Method to submit a new question to CouchDB
   submit(): void {
     console.log(this.question);
+    this.generateuuidque()
     
     const newQuestion = {
+      _id:this.mockinterview,
+      data:{
       question: this.question,
       options: this.options,
       correctAnswer: this.correctAnswer,
       marks: this.marks,
       type:"mockinterview"
+      }
 
     };
     console.log(newQuestion)
   
-    this.registerService.addMockInterviewQuestion(newQuestion).subscribe({
+    this.couch.addMockInterviewQuestion(newQuestion).subscribe({
       next: (response: any) => {
         console.log(newQuestion);
         
-        console.log('Question added successfully:', response);
+        alert('Question added successfully');
+        
         this.resetForm();
         this.fetchMockInterviewQuestions();
       },
@@ -315,4 +244,97 @@ private router: Router ,faqService: FAQService) {}
   navigateToQuestion(questionId: any): void {
     this.router.navigate([`/question/${questionId}`]);
   }
+  activeIndex: number | null = null;
+  showAll: boolean = false;
+  imageUrl: string = '';
+  title: string = '';
+  description: string = '';
+  duration: string = '';
+  department: string = ''; // Store department input
+
+  visibleCount: number = 3;
+  cardid: string = '';
+  newcards: any[] = [];
+  visibleCards: any[] = [];
+  departments: string[] = []; // Store unique department names
+  selectedDepartment: string | null = null; // Track selected department
+  mockinterview:string=''
+
+ 
+
+
+  
+
+  // Correct the UUID generation
+  generateuuid() {
+    this.cardid = `card_2_${uuidv4()}`;  // Fixed the string concatenation
+  }
+  generateuuidque() {
+    this.mockinterview = `mockinterview_2_${uuidv4()}`;  // Fixed the string concatenation
+  }
+
+ 
+
+  updateVisibleCards() {
+    if (this.selectedDepartment) {
+      this.visibleCards = this.newcards.filter(card => card.department === this.selectedDepartment);
+    } else {
+      this.visibleCards = this.showAll ? [...this.newcards] : this.newcards.slice(0, this.visibleCount);
+    }
+  }
+
+  toggleView() {
+    this.showAll = !this.showAll;
+    this.updateVisibleCards();
+  }
+
+  setActiveIndex(index: number) {
+    this.activeIndex = index;
+    this.selectedDepartment = this.departments[index]; // Get selected department
+    this.updateVisibleCards(); // Update visible cards based on selection
+  }
+
+  updateDepartments() {
+    const departmentSet = new Set(this.newcards.map(card => card.department)); // Extract unique departments
+    this.departments = Array.from(departmentSet);
+  }
+
+  generateuuid1() {
+    this.cardid = `card_2_${uuidv4()}`;
+  }
+
+  addcarddetails() {
+    this.generateuuid1();
+    const carddata = {
+      _id: this.cardid,
+      data: {
+        imageUrl: this.imageUrl,
+        Title: this.title,
+        Description: this.description,
+        Duration: this.duration,
+        Department: this.department, 
+        type:"carddetails",
+      },
+    };
+
+    this.couch.addCardDetails(carddata).subscribe({
+      next: (response) => {
+        console.log(response)
+        alert('Card details added successfully!');
+
+        // Reset form inputs
+        this.imageUrl = '';
+        this.title = '';
+        this.description = '';
+        this.duration = '';
+        this.department = '';
+      },
+      error: (error) => {
+        alert('Oops! Card was not added.');
+        console.error('Error adding card:', error);
+      },
+    });
+  }
 }
+
+

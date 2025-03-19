@@ -4,6 +4,28 @@
   padding: 0;
   box-sizing: border-box;
 }
+input[name="searchbar"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+input[name="searchbar"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+@media (max-width: 600px) {
+  input[name="searchbar"] {
+    max-width: 100%;
+    font-size: 14px;
+  }
+}
 
 body {
   font-family: Arial, sans-serif;

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+
 
 export interface Question {
   id: number;
@@ -11,7 +13,7 @@ export interface Question {
 @Component({
   selector: 'app-skill-assessent',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,RouterModule,RouterLink],
   templateUrl: './skill-assessent.component.html',
   styleUrl: './skill-assessent.component.css'
 })
@@ -28,7 +30,7 @@ export class SkillAssessentComponent {
   predictedScore: string | null = null;
   confidence: string | null = null;
 
-  constructor() {}
+  constructor(private router:Router) {}
 
   submitAnswers(): void {
     // Collect answers for all 5 questions

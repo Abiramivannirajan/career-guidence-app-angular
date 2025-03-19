@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterService } from '../../../services/register.service.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { couchchatbotService } from '../../../services/couchchatbot.service';
+
 
 @Component({
   selector: 'app-find-your-jobs',
@@ -11,17 +12,23 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, HttpClientModule, RouterModule, FormsModule],
   templateUrl: './find-your-jobs.component.html',
   styleUrls: ['./find-your-jobs.component.css'],
-  providers: [RegisterService, HttpClient]
+  providers: [HttpClient]
 })
 export class FindYourJobsComponent implements OnInit {
+  
   jobs: any[] = [];  // Store fetched jobs
   filteredJobs: any[] = []; // Filtered job list
+  favoriteJobIds: Set<string> = new Set(); // Track favorite jobs
+  
   selectedLocation: string = '';  // Selected location (district)
   selectedSalaryRange: string = '';  // Selected salary range
   selectedExperience: string = '';  // Selected experience range
   searchTerm: string = '';  // Search term
   isLoading: boolean = true;  // Loading state
   errorMessage: string = '';  // Error message
+
+  searchbarValue : string = "";
+  currentUserId : string = "register_2_87a01413-d73b-4589-a4cb-d325de2fba5";
 
   // List of districts in Tamil Nadu
   tamilNaduDistricts: string[] = [
@@ -31,23 +38,41 @@ export class FindYourJobsComponent implements OnInit {
     'Theni', 'Villupuram', 'Ramanathapuram'
   ];
 
-  constructor(private registerService: RegisterService, private router: Router, private http: HttpClient) {}
+  constructor(private couchservice: couchchatbotService, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.fetchJobs(); // Fetch jobs from database
+    this.fetchFavoriteJobs();
   }
 
   fetchJobs(): void {
-    this.registerService.getJobs().subscribe({
+    this.couchservice.getJobs().subscribe({
       next: (response) => {
         this.jobs = response.rows.map((row: any) => row.doc); // Extract jobs from response
         this.filteredJobs = [...this.jobs]; // Initialize filtered jobs
         this.isLoading = false;
+        console.log(this.filteredJobs);
+        
       },
       error: (error) => {
         console.error('Error fetching jobs:', error);
         this.errorMessage = 'Failed to fetch jobs. Please try again later.';
         this.isLoading = false;
+      }
+    });
+  }
+
+  fetchFavoriteJobs(): void {
+    this.couchservice.getParticularUserApplications(this.currentUserId).subscribe({
+      next: (response :any) => {
+        console.log(response);
+        
+        this.favoriteJobIds = new Set(response.rows.filter((e : any) => e.doc.data.applicationStatus === 'favorite').map((row: any) => row.doc.data.jobId));
+        console.log("Favorite")
+        console.log(this.favoriteJobIds)
+      },
+      error: (error) => {
+        console.error('Error fetching favorite jobs:', error);
       }
     });
   }
@@ -113,4 +138,57 @@ export class FindYourJobsComponent implements OnInit {
     console.log('Applying...');
     this.router.navigate(['form']);
   }
+
+  markFavorite(jobId: string): void {
+
+    if (this.favoriteJobIds.has(jobId)) {
+      console.log("Job is already marked as favorite.");
+      return;
+    }
+
+    const favoriteApplication = {
+      userId: this.currentUserId,
+      jobId: jobId,
+      applicationStatus: 'favorite',
+      type : 'application'
+    };
+    // console.log(favoriteApplication);
+    
+    this.couchservice.createJobApplication(favoriteApplication).subscribe({
+      next : (response : any) =>{
+        console.log(response);
+        console.log("Created successfully");
+        this.favoriteJobIds.clear();
+        this.fetchFavoriteJobs();
+      },
+      error : (error) => {
+        console.log(error)
+      }
+    }) 
+  }
+
+  isFavorite(jobId: string): boolean {
+    return this.favoriteJobIds.has(jobId);
+  }
+
+  searchForJob(){
+    if(this.searchbarValue.length == 0){
+      this.fetchJobs();
+      return;
+    }
+    this.couchservice.searchForJob(this.searchbarValue).subscribe({
+      next : (response) =>{
+        console.log(response)
+  
+          this.filteredJobs = response.rows.map((e : any) => e.doc);
+        
+      },
+      error : (error) =>{
+        console.log(error)
+      }
+    }
+    )
+  }
+
+
 }

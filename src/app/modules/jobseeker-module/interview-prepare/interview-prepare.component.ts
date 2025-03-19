@@ -5,17 +5,28 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import jsPDF from 'jspdf';
+import { couchchatbotService } from '../../../services/couchchatbot.service';
+import { RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 
 @Component({
   selector: 'app-interview-prepare',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTabsModule,NgFor, MatCardModule, MatButtonModule,NgIf], // Ensure MatTabsModule is included
+  imports: [CommonModule, FormsModule, MatTabsModule, NgFor, MatCardModule, MatButtonModule, NgIf,RouterModule,HttpClientModule],
+  providers:[couchchatbotService,HttpClient], // Ensure MatTabsModule is included
   templateUrl: './interview-prepare.component.html',
   styleUrls: ['./interview-prepare.component.css']
 })
 export class InterviewPrepareComponent {
 
+  constructor(readonly couchchatbot: couchchatbotService){}
+   
+  currentUser : string = "";
+  ngOnInit(){
+    this.currentUser = this.couchchatbot.getLoggedInUser() ?? "";
+  }
     // Method to download content as PDF
     downloadPDF() {
       const doc = new jsPDF();
@@ -190,6 +201,11 @@ export class InterviewPrepareComponent {
   
       // Saving the PDF
       doc.save('aptitude-preparation-guide.pdf');
+    }
+
+    logOut(){
+      this.couchchatbot.logout();
+      this.currentUser = "";
     }
   }
   

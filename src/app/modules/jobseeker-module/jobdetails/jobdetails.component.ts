@@ -1,26 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegisterService } from '../../../services/register.service.service';
+import { couchchatbotService } from '../../../services/couchchatbot.service';
+import { NavBarComponent } from '../../student-module/nav-bar/nav-bar.component';
+
 
 
 @Component({
   selector: 'app-JobDetails',
   standalone: true,
-  providers: [RegisterService],
-  imports: [CommonModule],
+  providers: [couchchatbotService],
+  imports: [CommonModule, NavBarComponent],
   templateUrl: './JobDetails.component.html',
   styleUrls: ['./JobDetails.component.css']
 })
 export class JobDetails implements OnInit {
   jobs: any[] = []; // Array to store job details
 
-  constructor(private registerservice: RegisterService) {}
+  constructor(private couchchatbot: couchchatbotService) {}
 
   ngOnInit(): void {
     this.fetchJobs();
   }
   fetchJobs(): void {
-    this.registerservice.getJobs().subscribe({
+    this.couchchatbot.getJobs().subscribe({
       next: (data) => {
         console.log(data);
         
